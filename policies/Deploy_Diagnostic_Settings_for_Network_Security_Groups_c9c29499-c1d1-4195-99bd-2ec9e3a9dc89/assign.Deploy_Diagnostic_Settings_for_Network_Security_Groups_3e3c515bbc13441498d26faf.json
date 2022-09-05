@@ -1,0 +1,40 @@
+{
+ "sku": {
+  "name": "A0",
+  "tier": "Free"
+ },
+ "identity": {
+  "principalId": "9e8b9c6c-3c14-4be1-9adc-600367bfc2a0",
+  "tenantId": "612f984e-b536-41ab-83df-1388fd6ad66b",
+  "type": "SystemAssigned"
+ },
+ "properties": {
+  "displayName": "Deploy Diagnostic Settings for Network Security Groups",
+  "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/c9c29499-c1d1-4195-99bd-2ec9e3a9dc89",
+  "scope": "/subscriptions/513f4932-c0e8-4757-9669-8259a90cab92/resourceGroups/pm_test_policy_rg",
+  "notScopes": [],
+  "parameters": {
+   "storagePrefix": {
+    "value": "SA1"
+   },
+   "rgName": {
+    "value": "pm_test_policy_rg"
+   }
+  },
+  "metadata": {
+   "assignedBy": "Paul Malcev",
+   "parameterScopes": {
+    "rgName": "/subscriptions/513f4932-c0e8-4757-9669-8259a90cab92/resourceGroups/pm_test_policy_rg"
+   },
+   "createdBy": "a7f45c35-b7f5-4af2-b370-7f2a15197e49",
+   "createdOn": "2022-09-05T09:54:23.2605955Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "enforcementMode": "Default"
+ },
+ "id": "/subscriptions/513f4932-c0e8-4757-9669-8259a90cab92/resourceGroups/pm_test_policy_rg/providers/Microsoft.Authorization/policyAssignments/3e3c515bbc13441498d26faf",
+ "type": "Microsoft.Authorization/policyAssignments",
+ "name": "3e3c515bbc13441498d26faf",
+ "location": "germanywestcentral"
+}
