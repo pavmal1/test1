@@ -1,0 +1,41 @@
+{
+ "sku": {
+  "name": "A0",
+  "tier": "Free"
+ },
+ "identity": {
+  "principalId": "aaf909d5-371f-45f0-b4f4-3f034190279b",
+  "tenantId": "612f984e-b536-41ab-83df-1388fd6ad66b",
+  "type": "SystemAssigned"
+ },
+ "properties": {
+  "displayName": "Apply diagnostic settings for SQL Databases",
+  "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/612f984e-b536-41ab-83df-1388fd6ad66b/providers/Microsoft.Authorization/policyDefinitions/policydef-cf4fs-sqldbs-ds-central-logs",
+  "scope": "/subscriptions/513f4932-c0e8-4757-9669-8259a90cab92/resourceGroups/pm_test_policy_rg",
+  "notScopes": [],
+  "parameters": {
+   "workspaceId": {
+    "value": "/subscriptions/513f4932-c0e8-4757-9669-8259a90cab92/resourcegroups/pm_test_policy_rg/providers/microsoft.operationalinsights/workspaces/logana-workspace1"
+   },
+   "storageAccountId": {
+    "value": "/subscriptions/513f4932-c0e8-4757-9669-8259a90cab92/resourcegroups/pm_test_policy_rg/providers/microsoft.storage/storageaccounts/satest1policy"
+   }
+  },
+  "metadata": {
+   "assignedBy": "Paul Malcev",
+   "parameterScopes": {
+    "workspaceId": "/subscriptions/513f4932-c0e8-4757-9669-8259a90cab92/resourcegroups/pm_test_policy_rg",
+    "storageAccountId": "/subscriptions/513f4932-c0e8-4757-9669-8259a90cab92/resourcegroups/pm_test_policy_rg"
+   },
+   "createdBy": "a7f45c35-b7f5-4af2-b370-7f2a15197e49",
+   "createdOn": "2022-09-05T12:00:50.7969003Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "enforcementMode": "Default"
+ },
+ "id": "/subscriptions/513f4932-c0e8-4757-9669-8259a90cab92/resourceGroups/pm_test_policy_rg/providers/Microsoft.Authorization/policyAssignments/11f95ae577214ab1871c9dee",
+ "type": "Microsoft.Authorization/policyAssignments",
+ "name": "11f95ae577214ab1871c9dee",
+ "location": "germanywestcentral"
+}

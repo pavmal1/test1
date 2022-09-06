@@ -1,0 +1,196 @@
+{
+ "properties": {
+  "displayName": "Apply diagnostic settings for SQL Databases",
+  "policyType": "Custom",
+  "mode": "All",
+  "description": "This policy automatically deploys and enable diagnostic settings to central logging account",
+  "metadata": {
+   "category": "Cloud Foundations Monitoring",
+   "createdBy": "b14c6e81-7bf8-4c4c-96eb-1a7133373152",
+   "createdOn": "2022-03-14T12:55:15.0881406Z",
+   "updatedBy": "b14c6e81-7bf8-4c4c-96eb-1a7133373152",
+   "updatedOn": "2022-03-14T13:01:30.5556086Z"
+  },
+  "parameters": {
+   "diagnosticsSettingName": {
+    "type": "string",
+    "metadata": {
+     "displayName": "Setting name",
+     "description": "Name of the policy for the diagnostics settings."
+    },
+    "defaultValue": "CentralAuditLogs"
+   },
+   "workspaceId": {
+    "type": "string",
+    "metadata": {
+     "displayName": "Log Analytics Workspace reference",
+     "description": "ResourceId of the target Log Analytics workspace for diagnostics logs and metrics.",
+     "strongType": "omsWorkspace",
+     "assignPermissions": true
+    }
+   },
+   "storageAccountId": {
+    "type": "string",
+    "metadata": {
+     "displayName": "Storage Account reference",
+     "description": "ResourceId of the target storage account for diagnostics events.",
+     "strongType": "Microsoft.Storage/storageAccounts",
+     "assignPermissions": true
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "field": "type",
+    "equals": "Microsoft.Sql/servers/databases"
+   },
+   "then": {
+    "effect": "deployIfNotExists",
+    "details": {
+     "type": "Microsoft.Insights/diagnosticSettings",
+     "roleDefinitionIds": [
+      "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+     ],
+     "existenceCondition": {
+      "allOf": [
+       {
+        "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+        "equals": "True"
+       },
+       {
+        "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled",
+        "equals": "True"
+       },
+       {
+        "field": "Microsoft.Insights/diagnosticSettings/workspaceId",
+        "matchInsensitively": "[parameters('workspaceId')]"
+       },
+       {
+        "field": "Microsoft.Insights/diagnosticSettings/storageAccountId",
+        "matchInsensitively": "[parameters('storageAccountId')]"
+       }
+      ]
+     },
+     "deployment": {
+      "properties": {
+       "mode": "incremental",
+       "template": {
+        "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+        "contentVersion": "1.0.0.0",
+        "parameters": {
+         "diagnosticsSettingName": {
+          "type": "string"
+         },
+         "resourceName": {
+          "type": "string"
+         },
+         "workspaceId": {
+          "type": "string"
+         },
+         "storageAccountId": {
+          "type": "string"
+         },
+         "location": {
+          "type": "string"
+         }
+        },
+        "variables": {},
+        "resources": [
+         {
+          "type": "Microsoft.Sql/servers/databases/providers/diagnosticSettings",
+          "apiVersion": "2017-05-01-preview",
+          "name": "[concat(parameters('resourceName'), '/', 'Microsoft.Insights/', parameters('diagnosticsSettingName'))]",
+          "location": "[parameters('location')]",
+          "dependsOn": [],
+          "properties": {
+           "workspaceId": "[parameters('workspaceId')]",
+           "storageAccountId": "[parameters('storageAccountId')]",
+           "metrics": [
+            {
+             "category": "AllMetrics",
+             "enabled": true,
+             "retentionPolicy": {
+              "days": 0,
+              "enabled": false
+             },
+             "timeGrain": null
+            }
+           ],
+           "logs": [
+            {
+             "category": "SQLInsights",
+             "enabled": true
+            },
+            {
+             "category": "AutomaticTuning",
+             "enabled": true
+            },
+            {
+             "category": "QueryStoreRuntimeStatistics",
+             "enabled": true
+            },
+            {
+             "category": "QueryStoreWaitStatistics",
+             "enabled": true
+            },
+            {
+             "category": "Errors",
+             "enabled": true
+            },
+            {
+             "category": "DatabaseWaitStatistics",
+             "enabled": true
+            },
+            {
+             "category": "Timeouts",
+             "enabled": true
+            },
+            {
+             "category": "Blocks",
+             "enabled": true
+            },
+            {
+             "category": "Deadlocks",
+             "enabled": true
+            },
+            {
+             "category": "Audit",
+             "enabled": true
+            },
+            {
+             "category": "SQLSecurityAuditEvents",
+             "enabled": true
+            }
+           ]
+          }
+         }
+        ],
+        "outputs": {}
+       },
+       "parameters": {
+        "diagnosticsSettingName": {
+         "value": "[parameters('diagnosticsSettingName')]"
+        },
+        "workspaceId": {
+         "value": "[parameters('workspaceId')]"
+        },
+        "storageAccountId": {
+         "value": "[parameters('storageAccountId')]"
+        },
+        "location": {
+         "value": "[field('location')]"
+        },
+        "resourceName": {
+         "value": "[field('fullName')]"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "id": "/providers/Microsoft.Management/managementGroups/612f984e-b536-41ab-83df-1388fd6ad66b/providers/Microsoft.Authorization/policyDefinitions/policydef-cf4fs-sqldbs-ds-central-logs",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "policydef-cf4fs-sqldbs-ds-central-logs"
+}
